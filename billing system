@@ -1,0 +1,51 @@
+class Product:
+    def __init__(self, product_id, name, price):
+        self.product_id = product_id
+        self.name = name
+        self.price = price
+
+class Customer:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+
+class Order:
+    def __init__(self, customer):
+        self.customer = customer
+        self.items = []
+
+    def add_item(self, product, quantity):
+        self.items.append({"product": product, "quantity": quantity})
+
+    def calculate_total(self):
+        total = sum(item["product"].price * item["quantity"] for item in self.items)
+        return total
+
+    def generate_invoice(self):
+        print("Invoice for Customer:", self.customer.name)
+        print("Email:", self.customer.email)
+        print("\nOrder Details:")
+        for item in self.items:
+            print(item["product"].name, "x", item["quantity"], "=", item["product"].price * item["quantity"])
+        print("\nTotal: $", self.calculate_total())
+
+def main():
+    # Create products
+    product1 = Product(1, "Product A", 10.0)
+    product2 = Product(2, "Product B", 5.0)
+    
+    # Create a customer
+    customer = Customer("John Doe", "john.doe@example.com")
+    
+    # Create an order
+    order = Order(customer)
+    
+    # Add items to the order
+    order.add_item(product1, 2)
+    order.add_item(product2, 3)
+    
+    # Generate and print the invoice
+    order.generate_invoice()
+
+if __name__ == "__main__":
+    main()
